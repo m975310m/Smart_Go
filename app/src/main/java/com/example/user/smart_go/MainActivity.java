@@ -47,6 +47,14 @@ public class MainActivity extends AppCompatActivity
                 new IntentIntegrator(MainActivity.this).setOrientationLocked(false).setCaptureActivity(ScannerActivity.class).initiateScan(); // `this` 放你在的Activity
             }
         });
+        runpoint_img.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                startActivity(new Intent(MainActivity.this,RunpointActivity.class));
+            }
+        });
 
     }
 

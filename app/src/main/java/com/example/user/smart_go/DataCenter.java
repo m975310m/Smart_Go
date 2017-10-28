@@ -6,6 +6,7 @@ import android.os.Bundle;
 public class DataCenter
 {
     String id = "";
+    int point = 0;
     //public static String id="";
     public void setID(String id)
     {
@@ -15,4 +16,7 @@ public class DataCenter
     {
         return id;
     }
+
+    public void setPoint(int point){this.point = point;}
+    public int getPoint() {return point;}
 }

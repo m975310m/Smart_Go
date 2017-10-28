@@ -8,7 +8,12 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
+
+import com.example.user.smart_go.DataCenter;
+import com.example.user.smart_go.MainActivity;
+import com.example.user.smart_go.step.service.StepService;
 
 /**
  * Created by DylanAndroid on 2016/5/26.
@@ -189,10 +194,11 @@ public class StepArcView extends View {
      * @param totalStepNum  设置的步数
      * @param currentCounts 所走步数
      */
+    DataCenter datacenter = MainActivity.datacenter;
     public void setCurrentCount(int totalStepNum, int currentCounts) {
         /**如果当前走的步数超过总步数则圆弧还是270度，不能成为园*/
         if (currentCounts > totalStepNum) {
-            currentCounts = totalStepNum;
+
         }
 
         /**上次所走步数占用总共步数的百分比*/

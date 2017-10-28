@@ -19,13 +19,13 @@ import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.example.administrator.mystepcounter.MainActivity;
-import com.example.administrator.mystepcounter.R;
-import com.example.administrator.mystepcounter.step.UpdateUiCallBack;
-import com.example.administrator.mystepcounter.step.accelerometer.StepCount;
-import com.example.administrator.mystepcounter.step.accelerometer.StepValuePassListener;
-import com.example.administrator.mystepcounter.step.bean.StepData;
-import com.example.administrator.mystepcounter.step.utils.DbUtils;
+import com.example.user.smart_go.MainActivity;
+import com.example.user.smart_go.R;
+import com.example.user.smart_go.step.UpdateUiCallBack;
+import com.example.user.smart_go.step.accelerometer.StepCount;
+import com.example.user.smart_go.step.accelerometer.StepValuePassListener;
+import com.example.user.smart_go.step.bean.StepData;
+import com.example.user.smart_go.step.utils.DbUtils;
 import com.orhanobut.logger.Logger;
 
 import java.text.SimpleDateFormat;
@@ -57,7 +57,7 @@ public class StepService extends Service implements SensorEventListener {
     /**
      * 当前所走的步数
      */
-    private int CURRENT_STEP;
+    public static int CURRENT_STEP;
     /**
      * 计步传感器类型  Sensor.TYPE_STEP_COUNTER或者Sensor.TYPE_STEP_DETECTOR
      */
@@ -370,6 +370,11 @@ public class StepService extends Service implements SensorEventListener {
      */
     public int getStepCount() {
         return CURRENT_STEP;
+    }
+
+    public void setStepCount(int count){
+        CURRENT_STEP = count;
+        mStepCount.setSteps(CURRENT_STEP);
     }
 
     @Override
