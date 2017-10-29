@@ -3,10 +3,13 @@ package com.example.user.smart_go;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.user.smart_go.view.gpsData;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -14,14 +17,23 @@ public class MainActivity extends AppCompatActivity
 {
     public static DataCenter datacenter = new DataCenter();
     private ImageView exchange_img,runpoint_img,Inquire_img,record_img,scanning_img,news_img;
+    private Button testbutton;
+    String TAG = "MainActivity";
+    gpsData gps;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) 
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        gps = new gpsData();
+        gps.loadGpsData(MainActivity.this);
         findView();
         setOnClickEvent();
         setID();
+
+
+
     }
 
     private void setID()
@@ -48,14 +60,25 @@ public class MainActivity extends AppCompatActivity
             }
         });
         runpoint_img.setOnClickListener(new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View view)
+        {
+            startActivity(new Intent(MainActivity.this,RunpointActivity.class));
+        }
+    });
+
+        testbutton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
-                startActivity(new Intent(MainActivity.this,RunpointActivity.class));
+                if(gps.getLocationLoadSuccess()){
+                    Log.d(TAG, String.valueOf(gps.getPlace().latitude));
+                }
+
             }
         });
-
     }
 
     private void findView()
@@ -66,6 +89,7 @@ public class MainActivity extends AppCompatActivity
         Inquire_img = (ImageView)findViewById(R.id.Inquire_img);
         scanning_img = (ImageView)findViewById(R.id.scanning_img);
         news_img = (ImageView)findViewById(R.id.news_img);
+        testbutton = (Button)findViewById(R.id.test_btn);
     }
 
     @Override
