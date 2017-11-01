@@ -4,6 +4,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.Handler;
 import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,15 +22,38 @@ public class RunpointActivity extends AppCompatActivity {
     private StepArcView cc;
     private SharedPreferencesUtils sp;
     private TextView point;
+    Handler handle_couponRebuild;
     DataCenter dataCenter = MainActivity.datacenter;
-    @Override
+    int x =0;
+    StepService stepService;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_runpoint);
         findView();
         initData();
         setupService();
+        addpoint();
         point.setText(String.valueOf(dataCenter.getPoint()));
+    }
+
+    private void addpoint()
+    {
+
+
+            handle_couponRebuild = new Handler();
+            final Runnable runnable = new Runnable()
+            {
+                @Override
+                public void run() {
+
+                    x++;
+                    cc.setCurrentCount(10,x);
+                }
+
+
+
+            };
+        handle_couponRebuild.postDelayed(runnable, 1*1000);
     }
 
 
@@ -52,7 +76,7 @@ public class RunpointActivity extends AppCompatActivity {
         isBind = bindService(intent,conn, Context.BIND_AUTO_CREATE);
         startService(intent);
     }
-//    * 用于查询应用服务（application Service）的状态的一种interface，
+    //    * 用于查询应用服务（application Service）的状态的一种interface，
 //            * 更详细的信息可以参考Service 和 context.bindService()中的描述，
 //            * 和许多来自系统的回调方式一样，ServiceConnection的方法都是进程的主线程中调用的。
 //            */
@@ -64,7 +88,7 @@ public class RunpointActivity extends AppCompatActivity {
          */
         @Override
         public void onServiceConnected(ComponentName name, final IBinder service) {
-            final StepService stepService = ((StepService.StepBinder) service).getService();
+            stepService = ((StepService.StepBinder) service).getService();
             //设置初始化数据
             String planWalk_QTY = (String) sp.getParam("planWalk_QTY", "30");
             cc.setCurrentCount(Integer.parseInt(planWalk_QTY), stepService.getStepCount());

@@ -71,7 +71,8 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".RunpointActivity"></activity>
+        <activity android:name=".RunpointActivity" />
+        <activity android:name=".paymentActivity"></activity>
     </application>
 
 </manifest>

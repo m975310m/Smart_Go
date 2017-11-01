@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion '25.0.0' // Older versions may give compile errors
+    buildToolsVersion '26.0.2' // Older versions may give compile errors
     defaultConfig {
         applicationId "com.example.administrator.mystepcounter"
         minSdkVersion 15
@@ -38,6 +38,7 @@ dependencies {
     compile 'com.google.android.gms:play-services-fitness:9.0.0'
     compile 'com.google.android.gms:play-services-wearable:9.0.0'
 }
+
 
 
 repositories {

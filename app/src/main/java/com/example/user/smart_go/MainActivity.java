@@ -13,6 +13,9 @@ import com.example.user.smart_go.view.gpsData;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class MainActivity extends AppCompatActivity 
 {
     public static DataCenter datacenter = new DataCenter();
@@ -20,7 +23,7 @@ public class MainActivity extends AppCompatActivity
     private Button testbutton;
     String TAG = "MainActivity";
     gpsData gps;
-
+    JSONObject conpom_scanner;
     @Override
     protected void onCreate(Bundle savedInstanceState) 
     {
@@ -38,7 +41,7 @@ public class MainActivity extends AppCompatActivity
 
     private void setID()
     {
-        datacenter.id="TestID";
+        datacenter.id="00002";
     }
 
     private void setOnClickEvent()
@@ -98,8 +101,16 @@ public class MainActivity extends AppCompatActivity
         if(result != null) {
             if(result.getContents() == null) {
                 Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
-                ;
             }
+            try {
+                datacenter.conpon_scanner = new JSONObject(result.getContents().toString());
+                Log.d("導入JS",datacenter.conpon_scanner.toString());
+                startActivity(new Intent(MainActivity.this,paymentActivity.class));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            Toast.makeText(this,"Scanned:" + result.getContents(),Toast.LENGTH_LONG).show();
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
